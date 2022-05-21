@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" href="/board.css">
+</head>
+
+<body>
+<div class="container">
+    <div class="text-center">
+        <h1>회원가입</h1>
+        <p class="lead">회원가입하세요. 하라고.</p>
+    </div>
+
+    <div class="order-md-1">
+        <h4 class="mb-3">회원정보</h4>
+        <form class="needs-validation" novalidate th:action="@{/signup}" method="POST">
+
+
+            <div class="mb-3">
+                <label for="username">ID</label>
+                <input type="text" class="form-control" id="username" placeholder="ID" required name="user-id">
+            </div>
+
+
+            <div class="mb-3">
+                <label for="password">Passwd</label>
+                <input type="password" class="form-control" id="password" placeholder="Passwd"  required name="user-password">
+            </div>
+
+
+            <div class="mb-3">
+                <label for="firstName">Name</label>
+                <input type="text" class="form-control" id="real-name" placeholder="Name" value="" required name="user-real-name">
+            </div>
+
+
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">가입하기</button>
+            <hr class="mb-4">
+
+            <footer th:replace="/fragments/semantic :: footer"></footer>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
