@@ -1,5 +1,7 @@
+package com.example.Sum102.Repository;
+
 import com.example.Sum102.Domain.User;
-import com.example.Sum102.repository.UserRepository;
+import com.example.Sum102.Repository.UserRepository;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
@@ -48,7 +50,7 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     public User save(User user) {
-        String sql = "insert into book(id, passwd, name) values(?,?,?)";
+        String sql = "insert into users(id, name, passwd) values(?,?,?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -56,12 +58,13 @@ public class JdbcUserRepository implements UserRepository {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, user.getId());
-            pstmt.setString(2, user.getPasswd());
-            pstmt.setString(3, user.getName());
+            pstmt.setString(2, user.getName());
+            pstmt.setString(3, user.getPasswd());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
+
             if (rs.next()) {
-                ;
+                System.out.println("회원가입 성공");
             } else {
                 throw new SQLException("id 조회실패");
             }

@@ -1,7 +1,7 @@
 package com.example.Sum102.Service;
 
 import com.example.Sum102.Domain.User;
-import com.example.Sum102.repository.UserRepository;
+import com.example.Sum102.Repository.UserRepository;
 
 public class UserService {
     private final UserRepository userRepository;

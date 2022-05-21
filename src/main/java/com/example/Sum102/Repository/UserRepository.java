@@ -1,4 +1,4 @@
-package com.example.Sum102.repository;
+package com.example.Sum102.Repository;
 
 import com.example.Sum102.Domain.User;
 

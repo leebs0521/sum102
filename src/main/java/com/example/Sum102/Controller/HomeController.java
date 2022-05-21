@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class homeController {
+public class HomeController {
 
     /*
     *   made by 이범수
@@ -18,7 +18,7 @@ public class homeController {
     private final UserService userService;
 
     @Autowired
-    public homeController(UserService userService){
+    public HomeController(UserService userService){
         this.userService = userService;
     }
 
@@ -37,6 +37,7 @@ public class homeController {
         User user = new User();
         user.setName(form.getName());
         user.setId(form.getId());
+        user.setPasswd(form.getPasswd());
         userService.addUser(user);
         return "redirect:/";
     }
