@@ -20,10 +20,8 @@ public class BookController {
     @GetMapping(value = "/list")
     public String list(Model model) {
         System.out.println(" books mapping  ");
-        List<Books> books = bookService.findBooks();
-        System.out.println(" books mapping12313123  ");
-        model.addAttribute("books", books);
-        System.out.println(" books mapping 123123123123123 ");
+        List<Books> lists = bookService.findBooks();
+        model.addAttribute("books", lists);
         return "list1";
     }
 }

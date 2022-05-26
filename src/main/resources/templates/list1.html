@@ -7,7 +7,7 @@
 <body>
 <div class="container">
     <div>
-        <h1><a href="/">도서목록 관리 시스템</a> </h1>
+        <h1><a href="/">판매 중인 서적</a> </h1>
         <table border ="1" width="50%" height=200 bordercolor="black">
             <thead>
             <tr>
@@ -23,7 +23,7 @@
                 <td>정보</td>
             </tr>
             <tr th:each="book : ${books}">
-                <td th:text="${book.bookid}"></td>
+                <td th:text="${book.bookId}"></td>
                 <td th:text="${book.bName}"></td>
                 <td th:text="${book.bPrice}"></td>
                 <td th:text="${book.userID}"></td>
