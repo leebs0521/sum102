@@ -63,7 +63,7 @@ public class JdbcUserRepository implements UserRepository {
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
 
-            if (rs.next()) {
+            if (rs != null) {
                 System.out.println("회원가입 성공");
             } else {
                 throw new SQLException("id 조회실패");
