@@ -21,16 +21,19 @@ public class HomeController {
     *   home.html 으로 매핑
     * */
     private final UserService userService;
-
+    private final BookService bookService;
 
     @Autowired
-    public HomeController(UserService userService){
+    public HomeController(UserService userService, BookService bookService){
         this.userService = userService;
+        this.bookService = bookService;
     }
 
 
+
     @GetMapping("/")
-    public String home(){
+    public String home(Model model){
+        model.addAttribute("status", "로그인이 필요합니다.");
         return "home";
     }
 
@@ -52,16 +55,20 @@ public class HomeController {
     @PostMapping("login")
     public String login(Model model, UserForm form){
         User user = new User();
-        System.out.println("1");
         user.setId(form.getId());
-        System.out.println("2");
         user.setPasswd(form.getPasswd());
-        System.out.println("3");
         user.setName("");
-        System.out.println("4");
-        userService.login(user);
-        System.out.println("5");
-        return "/loginSucess";
+        Boolean res =  userService.login(user);
+
+        if(res) {
+            List<Books> lists = bookService.findBooks();
+            model.addAttribute("books", lists);
+            return "/list";
+        }
+        else{
+            model.addAttribute("status", "로그인 실패");
+            return "home";
+        }
     }
 
 }

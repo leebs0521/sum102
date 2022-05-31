@@ -14,7 +14,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void login(User user){
-        userRepository.loginCheck(user);
+    public Boolean login(User user){
+        return userRepository.loginCheck(user);
     }
 }

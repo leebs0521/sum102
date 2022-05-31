@@ -77,8 +77,8 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
-    public User loginCheck(User user) {
-        String sql = "select * from users where id = ? and passwd = ?";
+    public Boolean loginCheck(User user) {
+        String sql = "select count(*) from users where id = \"" + user.getId() + " \" and passwd =\"" + user.getPasswd() + "\"";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -86,17 +86,21 @@ public class JdbcUserRepository implements UserRepository {
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, user.getId());
-            pstmt.setString(2, user.getPasswd());
-            pstmt.executeUpdate();
-            rs = pstmt.getGeneratedKeys();
+            rs = pstmt.executeQuery(sql);
 
-            if (rs != null) {
-                System.out.println("로그인 성공");
+            if (rs.next()) {
+
+                if(rs.getInt("Count(*)") == 1) {
+                    System.out.println("로그인 성공");
+                    return true;
+                }
+                else {
+                    System.out.println("로그인 실패");
+                    return false;
+                }
             } else {
                 throw new SQLException("id 조회실패");
             }
-            return user;
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {

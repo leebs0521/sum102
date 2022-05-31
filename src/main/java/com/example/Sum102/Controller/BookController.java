@@ -17,7 +17,7 @@ public class BookController {
     @Autowired
     public BookController(BookService bookService){ this.bookService = bookService; }
 
-    @GetMapping(value = "/loginSucess")
+    @GetMapping(value = "/list")
     public String list(Model model) {
         System.out.println(" books mapping  ");
         List<Books> lists = bookService.findBooks();

@@ -22,7 +22,7 @@
             </ul>
             <!--데이터를 서버로 전송-->
             <button type="submit">로그인</button>
-            <p>${status}
+            <p th:text = "'' + ${status}">
         </fieldset>
     </form>
     <a href="/createUser">회원가입</a>
