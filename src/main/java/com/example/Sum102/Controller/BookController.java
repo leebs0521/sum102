@@ -17,11 +17,11 @@ public class BookController {
     @Autowired
     public BookController(BookService bookService){ this.bookService = bookService; }
 
-    @GetMapping(value = "/list")
+    @GetMapping(value = "/loginSucess")
     public String list(Model model) {
         System.out.println(" books mapping  ");
         List<Books> lists = bookService.findBooks();
         model.addAttribute("books", lists);
-        return "list1";
+        return "list";
     }
 }

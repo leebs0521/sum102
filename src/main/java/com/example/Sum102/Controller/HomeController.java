@@ -49,5 +49,19 @@ public class HomeController {
         return "redirect:/";
     }
 
+    @PostMapping("login")
+    public String login(Model model, UserForm form){
+        User user = new User();
+        System.out.println("1");
+        user.setId(form.getId());
+        System.out.println("2");
+        user.setPasswd(form.getPasswd());
+        System.out.println("3");
+        user.setName("");
+        System.out.println("4");
+        userService.login(user);
+        System.out.println("5");
+        return "/loginSucess";
+    }
 
 }
