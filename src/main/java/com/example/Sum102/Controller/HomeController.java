@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -38,30 +39,41 @@ public class HomeController {
     }
 
     @GetMapping(value = "createUser")
-    public String createUserForm(){
+    public String createUserForm(Model model){
+        model.addAttribute("status", "정보를 입력하세요.");
         return "createUserForm";
     }
-
     @PostMapping(value="createUser")
-    public String create(UserForm form){
+    public String create(UserForm form, Model model){
         User user = new User();
         user.setName(form.getName());
         user.setId(form.getId());
         user.setPasswd(form.getPasswd());
-        userService.addUser(user);
-        return "redirect:/";
+        Boolean rs = userService.addUser(user);
+        if(rs) {
+            model.addAttribute("status", "회원가입 성공");
+            return "home";
+        }
+        else{
+            model.addAttribute("status", "이미 존재하는 아이디 입니다.");
+            return "createUserForm";
+        }
     }
 
     @PostMapping("login")
-    public String login(Model model, UserForm form){
+    public String login(Model model, UserForm form, HttpServletRequest req){
         User user = new User();
         user.setId(form.getId());
         user.setPasswd(form.getPasswd());
         user.setName("");
-        Boolean res =  userService.login(user);
+        Boolean res = userService.login(user);
+        HttpSession session = req.getSession();
 
         if(res) {
+            session.setAttribute("userId", user.getId());
+            System.out.println(user.getId());
             List<Books> lists = bookService.findBooks();
+            model.addAttribute("userId", session.getAttribute("userId"));
             model.addAttribute("books", lists);
             return "/list";
         }
@@ -77,22 +89,27 @@ public class HomeController {
     }
 
     @PostMapping(value= "addlist") // 도서 입력 화면 데이터 인수
-    public String addlist(BookForm form, Model model){
+    public String addlist(BookForm form, Model model, HttpServletRequest req){
+
+        HttpSession session = req.getSession();
         Books book = new Books();
 //        book.setBookId(form.getbookid());
         book.setbName(form.getbName());
         book.setbPrice(form.getbPrice());
-        book.setUserID(form.getUserID());
+        book.setUserID((String)session.getAttribute("userId"));
         book.setbInfo(form.getbInfo());
         bookService.addBook(book);
         return "redirect:/list";
     }
 
     @GetMapping(value = "/list")
-    public String list(Model model) {
+    public String list(Model model, HttpServletRequest req) {
+
+        HttpSession session = req.getSession();
         System.out.println(" books mapping  ");
         List<Books> lists = bookService.findBooks();
         model.addAttribute("books", lists);
+        model.addAttribute("userId",(String)session.getAttribute("userId"));
         return "list";
     }
 }

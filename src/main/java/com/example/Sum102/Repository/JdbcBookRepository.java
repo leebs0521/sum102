@@ -16,32 +16,32 @@ public class JdbcBookRepository implements BookRepository{
         this.dataSource = dataSource;
     }
 
-        public List<Books> findAll() {
-            String sql = "select * from books";
-            Connection conn = null;
-            PreparedStatement pstmt = null;
-            ResultSet rs = null;
-            try {
-                conn = getConnection();
-                pstmt = conn.prepareStatement(sql);
-                rs = pstmt.executeQuery();
-                List<Books> books = new ArrayList<>();
-                while(rs.next()) {  //불러올 테이블 컬럼 목록
-                    Books book = new Books();
-                    book.setBookId(rs.getLong("bookid"));
-                    book.setbName(rs.getString("bName"));
-                    book.setbPrice(rs.getInt("bPrice"));
-                    book.setUserID(rs.getInt("userID"));
-                    book.setbInfo(rs.getString("bInfo"));
-                    books.add(book);
-                }
-                return books;
-            } catch (Exception e) {
-                throw new IllegalStateException(e);
-            } finally {
-                close(conn, pstmt, rs);
+    public List<Books> findAll() {
+        String sql = "select * from books";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            List<Books> books = new ArrayList<>();
+            while(rs.next()) {  //불러올 테이블 컬럼 목록
+                Books book = new Books();
+                book.setBookId(rs.getLong("bookid"));
+                book.setbName(rs.getString("bName"));
+                book.setbPrice(rs.getInt("bPrice"));
+                book.setUserID(rs.getString("userID"));
+                book.setbInfo(rs.getString("bInfo"));
+                books.add(book);
             }
+            return books;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
         }
+    }
 
     @Override
     public Books save(Books book) {
@@ -54,7 +54,7 @@ public class JdbcBookRepository implements BookRepository{
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, book.getbName());
             pstmt.setInt(2, book.getbPrice());
-            pstmt.setInt(3, book.getUserID()); // 일단 비번 나중에 string으로
+            pstmt.setString(3, book.getUserID()); // 일단 비번 나중에 string으로 -> check
             pstmt.setString(4, book.getbInfo());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();

@@ -10,8 +10,14 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void addUser(User user){
-        userRepository.save(user);
+    public Boolean addUser(User user){
+        if(userRepository.checkUser(user)) {
+            userRepository.save(user);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
     public Boolean login(User user){

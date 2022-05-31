@@ -4,7 +4,7 @@ public class Books {
     private Long bookId;
     private String bName;
     private Integer bPrice;
-    private Integer userID;
+    private String userID;
     private String bInfo;
 
     public Long getBookId() {
@@ -31,11 +31,11 @@ public class Books {
         this.bPrice = bPrice;
     }
 
-    public Integer getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 

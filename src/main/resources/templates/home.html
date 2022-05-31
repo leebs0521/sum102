@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="home_style.css">
+    <link rel="stylesheet" href="/static/home_style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -9,7 +9,7 @@
 <body>
 <div class="loginbox">
     <h2>로그인</h2>
-    <form action= "login", method = "post" >
+    <form action= "login" method = "post" >
         <!--작성하지 않아도 문제는 없음-->
         <fieldset>
             <legend>로그인 구역</legend>
@@ -22,10 +22,10 @@
             </ul>
             <!--데이터를 서버로 전송-->
             <button type="submit">로그인</button>
+            <button type="button" onClick = "location.href='/createUser'">회원가입</button>
             <p th:text = "'' + ${status}">
         </fieldset>
     </form>
-    <a href="/createUser">회원가입</a>
 </div>
 </body>
 </html>

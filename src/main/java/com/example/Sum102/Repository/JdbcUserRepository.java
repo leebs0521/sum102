@@ -77,6 +77,38 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
+    public Boolean checkUser(User user) {
+        String sql = "select count(*) from users where id = \"" + user.getId() + "\"";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            rs = pstmt.executeQuery(sql);
+
+            if (rs.next()) {
+
+                if(rs.getInt("Count(*)") == 1) {
+                    System.out.println("이미 존재하는 아이디");
+                    return false;
+                }
+                else {
+                    System.out.println("회원 가입 가능");
+                    return true;
+                }
+            } else {
+                throw new SQLException("id 조회실패");
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
+
+    @Override
     public Boolean loginCheck(User user) {
         String sql = "select count(*) from users where id = \"" + user.getId() + " \" and passwd =\"" + user.getPasswd() + "\"";
         Connection conn = null;
