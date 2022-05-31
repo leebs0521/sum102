@@ -10,11 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
 public class HomeController {
-
     /*
     *   made by 이범수
     *   작업 내용:
@@ -71,4 +71,28 @@ public class HomeController {
         }
     }
 
+    @GetMapping(value = "addlist")
+    public String addlist(){
+        return "addlist";
+    }
+
+    @PostMapping(value= "addlist") // 도서 입력 화면 데이터 인수
+    public String addlist(BookForm form, Model model){
+        Books book = new Books();
+//        book.setBookId(form.getbookid());
+        book.setbName(form.getbName());
+        book.setbPrice(form.getbPrice());
+        book.setUserID(form.getUserID());
+        book.setbInfo(form.getbInfo());
+        bookService.addBook(book);
+        return "redirect:/list";
+    }
+
+    @GetMapping(value = "/list")
+    public String list(Model model) {
+        System.out.println(" books mapping  ");
+        List<Books> lists = bookService.findBooks();
+        model.addAttribute("books", lists);
+        return "list";
+    }
 }

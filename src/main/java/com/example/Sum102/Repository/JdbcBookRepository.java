@@ -4,10 +4,7 @@ import com.example.Sum102.Domain.Books;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +43,35 @@ public class JdbcBookRepository implements BookRepository{
             }
         }
 
-        private Connection getConnection() {
+    @Override
+    public Books save(Books book) {
+        String sql = "insert into books(bName, bPrice, userID, bInfo) values(?,?,?,?)";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, book.getbName());
+            pstmt.setInt(2, book.getbPrice());
+            pstmt.setInt(3, book.getUserID()); // 일단 비번 나중에 string으로
+            pstmt.setString(4, book.getbInfo());
+            pstmt.executeUpdate();
+            rs = pstmt.getGeneratedKeys();
+            if(rs != null){
+                System.out.println("good");
+            } else{
+                throw new SQLException("too bad");
+            }
+            return book;
+        }catch(Exception e){
+            throw new IllegalStateException(e);
+        }finally {
+            close(conn, pstmt, rs);
+        }
+    }
+
+    private Connection getConnection() {
             return DataSourceUtils.getConnection(dataSource);
         }
         private void close(Connection conn, PreparedStatement pstmt, ResultSet rs)

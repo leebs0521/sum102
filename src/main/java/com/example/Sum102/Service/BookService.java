@@ -17,4 +17,10 @@ public class BookService {
         return bookRepository.findAll();
     }
 
+    // 도서 추가
+    public Long addBook(Books book){
+        bookRepository.save(book);
+        return book.getBookId();
+
+    }
 }
