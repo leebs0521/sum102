@@ -5,6 +5,11 @@
 </head>
 
 <body>
+<div class ="login Session">
+    <div th:text="'반갑습니다. ' + ${userid} + '님'"> </div>
+    <button type = "button" onClick = "location.href='/logout'">로그아웃</button>
+</div>
+
 <div class="container">
     <div>
         <h1><a href="/">판매 중인 서적</a> </h1>
@@ -35,10 +40,6 @@
         </table>
         <button type="button" onClick = "location.href='/addProduct'">도서 추가</button>
     </div>
-</div>
-<div class ="login Session">
-    <div th:text="'반갑습니다. ' + ${userid} + '님'"> </div>
-    <button type = "button" onClick = "location.href='/logout'">로그아웃</button>
 </div>
 </body>
 </html>
