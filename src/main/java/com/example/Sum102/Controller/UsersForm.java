@@ -1,6 +1,6 @@
 package com.example.Sum102.Controller;
 
-public class UserForm {
+public class UsersForm {
     private String name="";
     private String id="";
     private String passwd = "";

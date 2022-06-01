@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<div class="container">
+    <form action="addProduct" method="post">
+        <div class="form-group">
+            <h1><a href="/">도서 추가</a></h1>
+            <p><label for="name">책 이름</label>
+                <input type="text" id="name" name="name" placeholder="책 이름을 입력하세요.">
+            </p>
+            <p><label for="price">가격</label>
+                <input type="text" id="price" name="price" placeholder="가격을 입력하세요.">
+            </p>
+
+            <p><label for="info">책 정보</label>
+                <input type="text" id="info" name="info" placeholder="책 정보를 입력하세요.">
+            </p>
+        </div>
+        <button type="submit">등록</button>
+    </form>
+</div>
+</body>
+</html>

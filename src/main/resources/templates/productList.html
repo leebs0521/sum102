@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<div class="container">
+    <div>
+        <h1><a href="/">판매 중인 서적</a> </h1>
+        <table border="1"width="50%" height=200 bordercolor="black">
+            <thead>
+            <tr>
+                <th>목록</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>게시글 넘버</td>
+                <td>책이름</td>
+                <td>가격</td>
+                <td>판매자</td>
+                <td>정보</td>
+                <td>등록 시간</td>
+            </tr>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.price}"></td>
+                <td th:text="${product.userid}"></td>
+                <td th:text="${product.info}"></td>
+                <td th:text="${product.times}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" onClick = "location.href='/addProduct'">도서 추가</button>
+    </div>
+</div>
+<div class ="login Session">
+    <div th:text="'반갑습니다. ' + ${userid} + '님'"> </div>
+    <button type = "button" onClick = "location.href='/logout'">로그아웃</button>
+</div>
+</body>
+</html>

@@ -1,11 +1,11 @@
 package com.example.Sum102;
 
-import com.example.Sum102.Repository.BookRepository;
-import com.example.Sum102.Repository.JdbcBookRepository;
-import com.example.Sum102.Service.BookService;
-import com.example.Sum102.Service.UserService;
-import com.example.Sum102.Repository.JdbcUserRepository;
-import com.example.Sum102.Repository.UserRepository;
+import com.example.Sum102.Repository.ProductRepository;
+import com.example.Sum102.Repository.JdbcProductRepository;
+import com.example.Sum102.Service.ProductService;
+import com.example.Sum102.Service.UsersService;
+import com.example.Sum102.Repository.JdbcUsersRepository;
+import com.example.Sum102.Repository.UsersRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,17 +20,17 @@ public class SpringConfig {
         this.dataSource = dataSource;
     }
     @Bean
-    public UserService userService(){
-        return new UserService(userRepository());
+    public UsersService userService(){
+        return new UsersService(userRepository());
     }
 
     @Bean
-    public BookService bookService() { return new BookService(bookRepository());}
+    public ProductService bookService() { return new ProductService(bookRepository());}
 
     @Bean
-    public BookRepository bookRepository() { return new JdbcBookRepository(dataSource);}
+    public ProductRepository bookRepository() { return new JdbcProductRepository(dataSource);}
     @Bean
-    public UserRepository userRepository(){
-        return new JdbcUserRepository(dataSource);
+    public UsersRepository userRepository(){
+        return new JdbcUsersRepository(dataSource);
     }
 }

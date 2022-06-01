@@ -1,16 +1,15 @@
 package com.example.Sum102.Repository;
 
-import com.example.Sum102.Domain.User;
-import com.example.Sum102.Repository.UserRepository;
+import com.example.Sum102.Domain.Users;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 import javax.sql.DataSource;
 import java.sql.*;
 
-public class JdbcUserRepository implements UserRepository {
+public class JdbcUsersRepository implements UsersRepository {
     private final DataSource dataSource;
 
-    public JdbcUserRepository(DataSource dataSource) {
+    public JdbcUsersRepository(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -49,17 +48,17 @@ public class JdbcUserRepository implements UserRepository {
 
 
     @Override
-    public User save(User user) {
-        String sql = "insert into users(id, name, passwd) values(?,?,?)";
+    public Users save(Users users) {
+        String sql = "insert into Users(id, name, passwd) values(?,?,?)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, user.getId());
-            pstmt.setString(2, user.getName());
-            pstmt.setString(3, user.getPasswd());
+            pstmt.setString(1, users.getId());
+            pstmt.setString(2, users.getName());
+            pstmt.setString(3, users.getPasswd());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
 
@@ -68,7 +67,7 @@ public class JdbcUserRepository implements UserRepository {
             } else {
                 throw new SQLException("id 조회실패");
             }
-            return user;
+            return users;
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
@@ -77,8 +76,8 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
-    public Boolean checkUser(User user) {
-        String sql = "select count(*) from users where id = \"" + user.getId() + "\"";
+    public Boolean checkUser(Users users) {
+        String sql = "select count(*) from Users where id = \"" + users.getId() + "\"";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -109,8 +108,8 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
-    public Boolean loginCheck(User user) {
-        String sql = "select count(*) from users where id = \"" + user.getId() + " \" and passwd =\"" + user.getPasswd() + "\"";
+    public Boolean loginCheck(Users users) {
+        String sql = "select count(*) from Users where id = \"" + users.getId() + " \" and passwd =\"" + users.getPasswd() + "\"";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;

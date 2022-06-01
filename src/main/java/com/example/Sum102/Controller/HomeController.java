@@ -1,9 +1,9 @@
 package com.example.Sum102.Controller;
 
-import com.example.Sum102.Domain.Books;
-import com.example.Sum102.Domain.User;
-import com.example.Sum102.Service.BookService;
-import com.example.Sum102.Service.UserService;
+import com.example.Sum102.Domain.Product;
+import com.example.Sum102.Domain.Users;
+import com.example.Sum102.Service.ProductService;
+import com.example.Sum102.Service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,13 +21,13 @@ public class HomeController {
     *   작업 내용:
     *   home.html 으로 매핑
     * */
-    private final UserService userService;
-    private final BookService bookService;
+    private final UsersService usersService;
+    private final ProductService productService;
 
     @Autowired
-    public HomeController(UserService userService, BookService bookService){
-        this.userService = userService;
-        this.bookService = bookService;
+    public HomeController(UsersService usersService, ProductService productService){
+        this.usersService = usersService;
+        this.productService = productService;
     }
 
 
@@ -44,12 +44,12 @@ public class HomeController {
         return "createUserForm";
     }
     @PostMapping(value="createUser")
-    public String create(UserForm form, Model model){
-        User user = new User();
-        user.setName(form.getName());
-        user.setId(form.getId());
-        user.setPasswd(form.getPasswd());
-        Boolean rs = userService.addUser(user);
+    public String create(UsersForm form, Model model){
+        Users users = new Users();
+        users.setName(form.getName());
+        users.setId(form.getId());
+        users.setPasswd(form.getPasswd());
+        Boolean rs = usersService.addUser(users);
         if(rs) {
             model.addAttribute("status", "회원가입 성공");
             return "home";
@@ -61,21 +61,21 @@ public class HomeController {
     }
 
     @PostMapping("login")
-    public String login(Model model, UserForm form, HttpServletRequest req){
-        User user = new User();
-        user.setId(form.getId());
-        user.setPasswd(form.getPasswd());
-        user.setName("");
-        Boolean res = userService.login(user);
+    public String login(Model model, UsersForm form, HttpServletRequest req){
+        Users users = new Users();
+        users.setId(form.getId());
+        users.setPasswd(form.getPasswd());
+        users.setName("");
+        Boolean res = usersService.login(users);
         HttpSession session = req.getSession();
 
         if(res) {
-            session.setAttribute("userId", user.getId());
-            System.out.println(user.getId());
-            List<Books> lists = bookService.findBooks();
-            model.addAttribute("userId", session.getAttribute("userId"));
-            model.addAttribute("books", lists);
-            return "/list";
+            session.setAttribute("userid", users.getId());
+            System.out.println(users.getId());
+            List<Product> products = productService.findProducts();
+            model.addAttribute("userid", session.getAttribute("userid"));
+            model.addAttribute("products", products);
+            return "/productList";
         }
         else{
             model.addAttribute("status", "로그인 실패");
@@ -83,33 +83,39 @@ public class HomeController {
         }
     }
 
-    @GetMapping(value = "addlist")
+    @GetMapping(value = "addProduct")
     public String addlist(){
-        return "addlist";
+        return "addProduct";
     }
 
-    @PostMapping(value= "addlist") // 도서 입력 화면 데이터 인수
-    public String addlist(BookForm form, Model model, HttpServletRequest req){
+    @PostMapping(value= "/addProduct") // 도서 입력 화면 데이터 인수
+    public String addProduct(ProductForm form, Model model, HttpServletRequest req){
 
         HttpSession session = req.getSession();
-        Books book = new Books();
-//        book.setBookId(form.getbookid());
-        book.setbName(form.getbName());
-        book.setbPrice(form.getbPrice());
-        book.setUserID((String)session.getAttribute("userId"));
-        book.setbInfo(form.getbInfo());
-        bookService.addBook(book);
-        return "redirect:/list";
+        Product product = new Product();
+        product.setName(form.getName());
+        product.setPrice(form.getPrice());
+        product.setUserid((String)session.getAttribute("userid"));
+        product.setInfo(form.getInfo());
+        productService.addProduct(product);
+        return "redirect:/productList";
     }
 
-    @GetMapping(value = "/list")
-    public String list(Model model, HttpServletRequest req) {
+    @GetMapping(value = "/productList")
+    public String productList(Model model, HttpServletRequest req) {
 
         HttpSession session = req.getSession();
-        System.out.println(" books mapping  ");
-        List<Books> lists = bookService.findBooks();
-        model.addAttribute("books", lists);
-        model.addAttribute("userId",(String)session.getAttribute("userId"));
-        return "list";
+        System.out.println(" products mapping  ");
+        List<Product> products = productService.findProducts();
+        model.addAttribute("products", products);
+        model.addAttribute("userid",(String)session.getAttribute("userid"));
+        return "productList";
+    }
+    @GetMapping(value ="/logout")
+    public String logout(Model model, HttpServletRequest req){
+        HttpSession session = req.getSession();
+        session.invalidate();
+        model.addAttribute("status", "로그인이 필요합니다.");
+        return "redirect:/";
     }
 }

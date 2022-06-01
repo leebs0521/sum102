@@ -1,6 +1,6 @@
 package com.example.Sum102.Domain;
 
-public class User {
+public class Users {
     private String id;
     private String passwd;
     private String name;
