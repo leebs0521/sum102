@@ -1,18 +1,25 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/productList.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 </head>
 
 <body>
-<div class ="login Session">
+<div class ="loginS">
     <div th:text="'반갑습니다. ' + ${userid} + '님'"> </div>
     <button type = "button" onClick = "location.href='/logout'">로그아웃</button>
 </div>
 
+
 <div class="container">
+    <div class="top_menu">
+
+    </div>
+    <h1><a href="/">판매 중인 서적</a> </h1>
     <div>
-        <h1><a href="/">판매 중인 서적</a> </h1>
         <table border="1"width="50%" height=200 bordercolor="black">
             <thead>
             <tr>
