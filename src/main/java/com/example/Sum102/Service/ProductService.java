@@ -23,4 +23,7 @@ public class ProductService {
         return product.getId();
 
     }
+    public Product findProduct(Long pid){
+        return productRepository.findOne(pid);
+    }
 }

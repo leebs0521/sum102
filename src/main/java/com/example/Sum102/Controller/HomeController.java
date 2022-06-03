@@ -1,14 +1,18 @@
 package com.example.Sum102.Controller;
 
+import com.example.Sum102.Domain.Comment;
 import com.example.Sum102.Domain.Product;
 import com.example.Sum102.Domain.Users;
+import com.example.Sum102.Service.CommentService;
 import com.example.Sum102.Service.ProductService;
 import com.example.Sum102.Service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -24,10 +28,13 @@ public class HomeController {
     private final UsersService usersService;
     private final ProductService productService;
 
+    private final CommentService commentService;
+
     @Autowired
-    public HomeController(UsersService usersService, ProductService productService){
+    public HomeController(UsersService usersService, ProductService productService, CommentService commentService){
         this.usersService = usersService;
         this.productService = productService;
+        this.commentService = commentService;
     }
 
 
@@ -117,5 +124,18 @@ public class HomeController {
         session.invalidate();
         model.addAttribute("status", "로그인이 필요합니다.");
         return "redirect:/";
+    }
+
+    @RequestMapping(value="/product/{pid}")
+    public String Product(@PathVariable("pid") Long pid, Model model, HttpServletRequest req){
+
+        List<Comment> comments = commentService.findComments(pid);
+        Product product = productService.findProduct(pid);
+        HttpSession session = req.getSession();
+
+        model.addAttribute("product", "product");
+        model.addAttribute("comments", "comments");
+        model.addAttribute("userid", (String)session.getAttribute("userid"));
+        return "productPage";
     }
 }

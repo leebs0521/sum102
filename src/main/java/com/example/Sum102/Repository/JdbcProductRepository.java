@@ -72,6 +72,11 @@ public class JdbcProductRepository implements ProductRepository {
         }
     }
 
+    @Override
+    public Product findOne(Long pid) {
+        return null;
+    }
+
     private Connection getConnection() {
             return DataSourceUtils.getConnection(dataSource);
         }
