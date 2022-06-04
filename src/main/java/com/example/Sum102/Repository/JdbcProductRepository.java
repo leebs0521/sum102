@@ -45,6 +45,36 @@ public class JdbcProductRepository implements ProductRepository {
         }
     }
 
+    public List<Product> findAll(String title) {
+        String sql = "select DISTINCT * from Product where title LIKE concat('%',?,'%') OR name LIKE concat('%',?,'%')";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, title);
+            pstmt.setString(2, title);
+            rs = pstmt.executeQuery();
+            List<Product> products = new ArrayList<>();
+            while(rs.next()) {  //불러올 테이블 컬럼 목록
+                Product product = new Product();
+                product.setTitle(rs.getString("title"));
+                product.setId(rs.getLong("id"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getInt("price"));
+                product.setUserid(rs.getString("userid"));
+                product.setInfo(rs.getString("info"));
+                product.setTimes(rs.getTimestamp("times"));
+                products.add(product);
+            }
+            return products;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
+    }
     @Override
     public Product save(Product product) {
         String sql = "insert into Product(title, name, price, userid, info, times) values(?,?,?,?,?, default)";

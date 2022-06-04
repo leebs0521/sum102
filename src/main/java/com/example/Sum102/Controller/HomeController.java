@@ -139,8 +139,7 @@ public class HomeController {
         model.addAttribute("comments", comments);
         model.addAttribute("userid", (String)session.getAttribute("userid"));
 
-        return "test1";
-        //return "productPage";
+        return "productPage";
     }
 
     @PostMapping(value="/addComment")
@@ -155,5 +154,15 @@ public class HomeController {
         comment.setPid((Long)session.getAttribute("pid"));
         commentService.addComment(comment);
         return "redirect:/product/"+session.getAttribute("pid");
+    }
+
+    @PostMapping(value="/searchProduct")
+    public String serachProduct(ProductForm form, Model model, HttpServletRequest req){
+        HttpSession session = req.getSession();
+        System.out.println(" products mapping  ");
+        List<Product> products = productService.findProducts(form.getTitle());
+        model.addAttribute("products", products);
+        model.addAttribute("userid",(String)session.getAttribute("userid"));
+        return "productList";
     }
 }
