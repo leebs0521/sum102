@@ -12,14 +12,15 @@
 <div class="container">
     <div class="top_menu">
     </div>
-    <h1>책 정보</a> </h1>
+    <h1 th:text="${product.title}"></h1>
+    <br>
     <div>
-        <p th:text="${product.id}"></p>
-        <p th:text="${product.name}"></p>
-        <p th:text="${product.price}"></p>
-        <p th:text="${product.userid}"></p>
-        <p th:text="${product.info}"></p>
-        <p th:text="${product.times}"></p>
+        <p th:text="'id: '+${product.id}"></p>
+        <p th:text="'책 이름: '+${product.name}"></p>
+        <p th:text="'가격: '+${product.price}"></p>
+        <p th:text="'등록자: '+${product.userid}"></p>
+        <p th:text="'책 정보: '+${product.info}"></p>
+        <p th:text="'등록시간: '+${product.times}"></p>
     </div>
     <h2>댓글 목록</h2>
     <div>
@@ -29,9 +30,10 @@
             <td th:text="${comment1.id}"></td>
             <td th:text="${comment1.userid}"></td>
             <td th:text="${comment1.pid}"></td>
+            <p></p>
         </tr>
     </div>
-    <form action="addComment" method="post">
+    <form action="/addComment" method="post">
         <div class="form-group">
             <p><label for="comment">댓글 추가</label>
                 <input type="text" id="comment" name="comment" placeholder="댓글을 입력하세요.">
@@ -39,7 +41,6 @@
         </div>
         <button type="submit">등록</button>
     </form>
-
 </div>
 </body>
 </html>

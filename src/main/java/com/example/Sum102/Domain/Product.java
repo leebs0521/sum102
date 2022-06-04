@@ -3,6 +3,7 @@ package com.example.Sum102.Domain;
 import java.sql.Timestamp;
 
 public class Product {
+    private String title;
     private Long id;
     private String name;
     private Integer price;
@@ -57,5 +58,13 @@ public class Product {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

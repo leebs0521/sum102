@@ -1,6 +1,7 @@
 package com.example.Sum102.Controller;
 
     public class ProductForm {
+        private String title = "";
         private String name="";
         private Integer price = 0;
         private String userid = "";
@@ -36,5 +37,13 @@ package com.example.Sum102.Controller;
 
         public void setInfo(String info) {
             this.info = info;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
         }
     }

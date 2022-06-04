@@ -99,6 +99,7 @@ public class HomeController {
 
         HttpSession session = req.getSession();
         Product product = new Product();
+        product.setTitle(form.getTitle());
         product.setName(form.getName());
         product.setPrice(form.getPrice());
         product.setUserid((String)session.getAttribute("userid"));
@@ -146,6 +147,9 @@ public class HomeController {
     public String addComment(CommentForm form, Model model, HttpServletRequest req){
         HttpSession session = req.getSession();
         Comment comment = new Comment();
+        System.out.println("1");
+        System.out.println((String)session.getAttribute("userid"));
+        System.out.println(session.getAttribute("pid"));
         comment.setComment(form.getComment());
         comment.setUserid((String)session.getAttribute("userid"));
         comment.setPid((Long)session.getAttribute("pid"));

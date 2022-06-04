@@ -57,7 +57,6 @@ public class JdbcCommentRepository implements CommentRepository{
             pstmt.setString(2, comment.getUserid());
             pstmt.setLong(1, comment.getPid());
             pstmt.setString(3, comment.getComment()); // 일단 비번 나중에 string으로 -> check
-            pstmt.setTimestamp(4, comment.getTimes());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             if(rs != null){
@@ -73,27 +72,7 @@ public class JdbcCommentRepository implements CommentRepository{
         }
     }
 
-    @Override
-    public List<Comment> test1() {
-        List<Comment> comments = new ArrayList<>();
-        Comment comment = new Comment();
-        comment.setId(1L);
-        comment.setComment("test");
-        comment.setUserid("admin");
-        comment.setTimes(new Timestamp(1L));
-        comment.setPid(1L);
-        comments.add(comment);
 
-        Comment comment1 = new Comment();
-        comment1.setId(1L);
-        comment1.setComment("test");
-        comment1.setUserid("root");
-        comment1.setPid(1L);
-        comment1.setTimes(new Timestamp(1L));
-        comments.add(comment1);
-
-        return comments;
-    }
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);
     }

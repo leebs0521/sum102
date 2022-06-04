@@ -28,6 +28,7 @@ public class JdbcProductRepository implements ProductRepository {
             List<Product> products = new ArrayList<>();
             while(rs.next()) {  //불러올 테이블 컬럼 목록
                 Product product = new Product();
+                product.setTitle(rs.getString("title"));
                 product.setId(rs.getLong("id"));
                 product.setName(rs.getString("name"));
                 product.setPrice(rs.getInt("price"));
@@ -46,17 +47,18 @@ public class JdbcProductRepository implements ProductRepository {
 
     @Override
     public Product save(Product product) {
-        String sql = "insert into Product(name, price, userid, info, times) values(?,?,?,?, default)";
+        String sql = "insert into Product(title, name, price, userid, info, times) values(?,?,?,?,?, default)";
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             conn = getConnection();
             pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, product.getName());
-            pstmt.setInt(2, product.getPrice());
-            pstmt.setString(3, product.getUserid()); // 일단 비번 나중에 string으로 -> check
-            pstmt.setString(4, product.getInfo());
+            pstmt.setString(1, product.getTitle());
+            pstmt.setString(2, product.getName());
+            pstmt.setInt(3, product.getPrice());
+            pstmt.setString(4, product.getUserid()); // 일단 비번 나중에 string으로 -> check
+            pstmt.setString(5, product.getInfo());
             pstmt.executeUpdate();
             rs = pstmt.getGeneratedKeys();
             if(rs != null){
@@ -85,6 +87,7 @@ public class JdbcProductRepository implements ProductRepository {
             rs = pstmt.executeQuery();
             Product product = new Product();
             while(rs.next()) {  //불러올 테이블 컬럼 목록
+                product.setTitle(rs.getString("title"));
                 product.setId(rs.getLong("id"));
                 product.setName(rs.getString("name"));
                 product.setPrice(rs.getInt("price"));
@@ -98,20 +101,6 @@ public class JdbcProductRepository implements ProductRepository {
         } finally {
             close(conn, pstmt, rs);
         }
-    }
-
-
-
-    @Override
-    public Product test1(){
-        Product product = new Product();
-        product.setId(1L);
-        product.setInfo("테스트");
-        product.setName("테스트");
-        product.setPrice(10000);
-        product.setTimes(new Timestamp(1L));
-
-        return product;
     }
 
     private Connection getConnection() {

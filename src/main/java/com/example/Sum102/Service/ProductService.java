@@ -28,7 +28,4 @@ public class ProductService {
         return productRepository.findOne(pid);
     }
 
-    public Product test1(){
-        return productRepository.test1();
-    }
 }

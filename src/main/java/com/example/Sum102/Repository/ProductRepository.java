@@ -9,6 +9,4 @@ public interface ProductRepository {
     Product save(Product product); // 도서 추가
 
     Product findOne(Long pid);
-
-    Product test1();
 }

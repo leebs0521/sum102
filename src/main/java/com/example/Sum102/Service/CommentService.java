@@ -25,7 +25,4 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public List<Comment> test1(){
-        return commentRepository.test1();
-    }
 }
