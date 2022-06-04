@@ -45,10 +45,32 @@ public class JdbcCommentRepository implements CommentRepository{
     }
 
     @Override
-    public Long save(Comment comment) {
+    public Comment save(Comment comment) {
         // 원영이형
-        return null;
-
+        String sql = "insert into Comment(pid, userid, comment, times) values(?, ?, ?, default)";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(2, comment.getUserid());
+            pstmt.setLong(1, comment.getPid());
+            pstmt.setString(3, comment.getComment()); // 일단 비번 나중에 string으로 -> check
+            pstmt.setTimestamp(4, comment.getTimes());
+            pstmt.executeUpdate();
+            rs = pstmt.getGeneratedKeys();
+            if(rs != null){
+                System.out.println("good");
+            } else{
+                throw new SQLException("too bad");
+            }
+            return comment;
+        }catch(Exception e){
+            throw new IllegalStateException(e);
+        }finally {
+            close(conn, pstmt, rs);
+        }
     }
 
     @Override

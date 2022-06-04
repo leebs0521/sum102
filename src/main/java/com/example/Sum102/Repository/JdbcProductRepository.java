@@ -75,8 +75,32 @@ public class JdbcProductRepository implements ProductRepository {
     @Override
     public Product findOne(Long pid) {
         // 경원
-        return null;
+        String sql = "select * from Product where id=" + pid.toString();
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            conn = getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            Product product = new Product();
+            while(rs.next()) {  //불러올 테이블 컬럼 목록
+                product.setId(rs.getLong("id"));
+                product.setName(rs.getString("name"));
+                product.setPrice(rs.getInt("price"));
+                product.setUserid(rs.getString("userid"));
+                product.setInfo(rs.getString("info"));
+                product.setTimes(rs.getTimestamp("times"));
+            }
+            return product;
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstmt, rs);
+        }
     }
+
+
 
     @Override
     public Product test1(){

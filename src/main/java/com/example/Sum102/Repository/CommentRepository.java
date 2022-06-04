@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CommentRepository {
     List<Comment> findAll(Long pid);
-    Long save(Comment comment);
+    Comment save(Comment comment);
 
     List<Comment> test1();
 }

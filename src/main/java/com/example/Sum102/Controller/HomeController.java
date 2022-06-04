@@ -130,8 +130,7 @@ public class HomeController {
     public String Product(@PathVariable("pid") Long pid, Model model, HttpServletRequest req){
 
         List<Comment> comments = commentService.findComments(pid);
-        // Product product = productService.findProduct(pid);
-        Product product = productService.test1();
+        Product product = productService.findProduct(pid);
 
         HttpSession session = req.getSession();
         session.setAttribute("pid", pid);
@@ -146,11 +145,11 @@ public class HomeController {
     @PostMapping(value="/addComment")
     public String addComment(CommentForm form, Model model, HttpServletRequest req){
         HttpSession session = req.getSession();
-        Comment commnet = new Comment();
-        commnet.setComment(form.getComment());
-        commnet.setUserid((String)session.getAttribute("userid"));
-        commnet.setPid((Long)session.getAttribute("pid"));
-        commentService.addComment(commnet);
-        return "redirect:/product/"+(String)session.getAttribute("pid");
+        Comment comment = new Comment();
+        comment.setComment(form.getComment());
+        comment.setUserid((String)session.getAttribute("userid"));
+        comment.setPid((Long)session.getAttribute("pid"));
+        commentService.addComment(comment);
+        return "redirect:/product/"+session.getAttribute("pid");
     }
 }
