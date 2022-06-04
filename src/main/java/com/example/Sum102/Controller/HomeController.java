@@ -27,7 +27,6 @@ public class HomeController {
     * */
     private final UsersService usersService;
     private final ProductService productService;
-
     private final CommentService commentService;
 
     @Autowired
@@ -126,16 +125,32 @@ public class HomeController {
         return "redirect:/";
     }
 
+
     @RequestMapping(value="/product/{pid}")
     public String Product(@PathVariable("pid") Long pid, Model model, HttpServletRequest req){
 
         List<Comment> comments = commentService.findComments(pid);
-        Product product = productService.findProduct(pid);
-        HttpSession session = req.getSession();
+        // Product product = productService.findProduct(pid);
+        Product product = productService.test1();
 
-        model.addAttribute("product", "product");
-        model.addAttribute("comments", "comments");
+        HttpSession session = req.getSession();
+        session.setAttribute("pid", pid);
+        model.addAttribute("product", product);
+        model.addAttribute("comments", comments);
         model.addAttribute("userid", (String)session.getAttribute("userid"));
-        return "productPage";
+
+        return "test1";
+        //return "productPage";
+    }
+
+    @PostMapping(value="/addComment")
+    public String addComment(CommentForm form, Model model, HttpServletRequest req){
+        HttpSession session = req.getSession();
+        Comment commnet = new Comment();
+        commnet.setComment(form.getComment());
+        commnet.setUserid((String)session.getAttribute("userid"));
+        commnet.setPid((Long)session.getAttribute("pid"));
+        commentService.addComment(commnet);
+        return "redirect:/product/"+(String)session.getAttribute("pid");
     }
 }

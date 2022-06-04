@@ -3,6 +3,7 @@ package com.example.Sum102.Service;
 import com.example.Sum102.Domain.Product;
 import com.example.Sum102.Repository.ProductRepository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class ProductService {
@@ -25,5 +26,9 @@ public class ProductService {
     }
     public Product findProduct(Long pid){
         return productRepository.findOne(pid);
+    }
+
+    public Product test1(){
+        return productRepository.test1();
     }
 }

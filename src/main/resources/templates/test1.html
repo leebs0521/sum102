@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+
+<body>
+<div class ="loginS">
+    <div th:text="'반갑습니다. ' + ${userid} + '님'"> </div>
+    <button type = "button" onClick = "location.href='/logout'">로그아웃</button>
+</div>
+
+<div class="container">
+    <div class="top_menu">
+
+    </div>
+    <h1>책 정보</a> </h1>
+    <div>
+        <p th:text="${product.id}"></p>
+        <p th:text="${product.name}"></p>
+        <p th:text="${product.price}"></p>
+        <p th:text="${product.userid}"></p>
+        <p th:text="${product.info}"></p>
+        <p th:text="${product.times}"></p>
+    </div>
+    <h2>댓글 목록</h2>
+    <div>
+        <tr th:each="comment1 : ${comments}">
+            <td th:text="${comment1.comment}"></td>
+            <td th:text="${comment1.times}"></td>
+            <td th:text="${comment1.id}"></td>
+            <td th:text="${comment1.userid}"></td>
+            <td th:text="${comment1.pid}"></td>
+        </tr>
+    </div>
+    <form action="addComment" method="post">
+        <div class="form-group">
+            <p><label for="comment">댓글 추가</label>
+                <input type="text" id="comment" name="comment" placeholder="댓글을 입력하세요.">
+            </p>
+        </div>
+        <button type="submit">등록</button>
+    </form>
+</div>
+</body>
+</html>

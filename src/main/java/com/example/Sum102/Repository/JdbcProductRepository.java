@@ -78,6 +78,18 @@ public class JdbcProductRepository implements ProductRepository {
         return null;
     }
 
+    @Override
+    public Product test1(){
+        Product product = new Product();
+        product.setId(1L);
+        product.setInfo("테스트");
+        product.setName("테스트");
+        product.setPrice(10000);
+        product.setTimes(new Timestamp(1L));
+
+        return product;
+    }
+
     private Connection getConnection() {
             return DataSourceUtils.getConnection(dataSource);
         }

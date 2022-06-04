@@ -5,6 +5,7 @@ import com.example.Sum102.Domain.Product;
 import com.example.Sum102.Repository.CommentRepository;
 import com.example.Sum102.Repository.ProductRepository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class CommentService {
@@ -20,9 +21,11 @@ public class CommentService {
     }
 
     // 댓글 추가
-    public Long addComment(Comment comment){
+    public void addComment(Comment comment){
         commentRepository.save(comment);
-        return comment.getId();
+    }
 
+    public List<Comment> test1(){
+        return commentRepository.test1();
     }
 }
