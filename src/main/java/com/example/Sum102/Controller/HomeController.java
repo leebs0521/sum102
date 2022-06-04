@@ -157,7 +157,7 @@ public class HomeController {
     }
 
     @PostMapping(value="/searchProduct")
-    public String serachProduct(ProductForm form, Model model, HttpServletRequest req){
+    public String searchProduct(ProductForm form, Model model, HttpServletRequest req){
         HttpSession session = req.getSession();
         System.out.println(" products mapping  ");
         List<Product> products = productService.findProducts(form.getTitle());

@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" type="text/css" href="/css/productPage.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 </head>
 
 <body>
 <div class ="loginS">
-    <div th:text="'반갑습니다. ' + ${userid} + '님'"> </div>
+    <div align="center" th:text="'반갑습니다. ' + ${userid} + '님'"> </div>
     <button type = "button" onClick = "location.href='/logout'">로그아웃</button>
 </div>
 
@@ -14,33 +18,35 @@
     </div>
     <h1 th:text="${product.title}"></h1>
     <br>
-    <div>
-        <p th:text="'id: '+${product.id}"></p>
+    <div class="book-info">
         <p th:text="'책 이름: '+${product.name}"></p>
         <p th:text="'가격: '+${product.price}"></p>
         <p th:text="'등록자: '+${product.userid}"></p>
-        <p th:text="'책 정보: '+${product.info}"></p>
         <p th:text="'등록시간: '+${product.times}"></p>
+        <p th:text="'책 정보: '+${product.info}"></p>
+
     </div>
-    <h2>댓글 목록</h2>
-    <div>
+
+    <div class="commemtarea">
+        <h2>댓글 목록</h2>
         <tr th:each="comment1 : ${comments}">
             <td th:text="${comment1.comment}"></td>
+            <p class="float-right">
             <td th:text="${comment1.times}"></td>
-            <td th:text="${comment1.id}"></td>
             <td th:text="${comment1.userid}"></td>
-            <td th:text="${comment1.pid}"></td>
+            <p/>
             <p></p>
         </tr>
+
+        <form action="/addComment" method="post">
+            <div class="form-group">
+                <p><label for="comment">댓글 추가</label>
+                    <input type="text" id="comment" name="comment" placeholder="댓글을 입력하세요.">
+                </p>
+            </div>
+            <button type="submit">등록</button>
+        </form>
     </div>
-    <form action="/addComment" method="post">
-        <div class="form-group">
-            <p><label for="comment">댓글 추가</label>
-                <input type="text" id="comment" name="comment" placeholder="댓글을 입력하세요.">
-            </p>
-        </div>
-        <button type="submit">등록</button>
-    </form>
 </div>
 </body>
 </html>

@@ -11,6 +11,9 @@ font-family: 'Noto Sans KR', sans-serif;
 /* body설정 */
 body{ background-color: #ededed; }
 
+.menu {
+    display: block;
+}
 .loginS {
     float: right;
     margin-top: 10px;
@@ -27,13 +30,52 @@ body{ background-color: #ededed; }
     border: none;
     background-color: #1673ea;
     color: #fff; font-size: 14px; font-weight: bold;
+
 }
 
 h1 {
-    width: 100%; /* 부모영역을 상속 */
+    width: 500px; /* 부모영역을 상속 */
     margin-top: 10px;
     margin-left: 10px;
     /* 한줄텍스트인 경우만 height와 line-height가 같으면 세로 가운데 처리 */
     height: 100px; line-height: 100px; font-size: 20px;
     font-weight: normal;
+}
+
+.container {
+    margin-left: 20px;
+    margin-right: 30%;
+}
+
+
+
+.search input {
+    width: 70%;
+    height: 32px;
+    text-align: left;
+}
+.search button {
+    height: 34px;
+}
+
+.searchbox {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+
+.searchbox button{
+    margin-top: 10px;
+    display: block;
+    float:left;
+    width: 220px; height: 50px;
+    border: none;
+    background-color: #1673ea;
+    color: #fff; font-size: 14px; font-weight: bold;
+
+}
+
+.post_id:hover {
+    color: #888888;
 }

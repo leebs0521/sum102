@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" type="text/css" href="/css/productList.css">
+    <link rel="stylesheet" type="text/css" href="css/productList.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
@@ -9,24 +9,25 @@
 
 <body>
 <div class ="loginS">
-    <div th:text="'반갑습니다. ' + ${userid} + '님'"> </div>
+    <div align="center" th:text="'반갑습니다. ' + ${userid} + '님'"> </div>
     <button type = "button" onClick = "location.href='/logout'">로그아웃</button>
 </div>
 
 
 <div class="container">
     <div class="top_menu">
-
     </div>
     <h1><a href="/">판매 중인 서적</a> </h1>
-    <div class="searchproduct">
+
+    <div class="search">
         <form action="/searchProduct" method="post">
             <input type="text" id="title" name="title" placeholder="게시글 또는 책 제목을 입력해 주세요.">
             <button type="submit">검색</button>
         </form>
     </div>
-    <div>
-        <table border="1"width="50%" height=200 bordercolor="black">
+
+    <div class="searchbox">
+        <table border="1" width="100%" height=200 bordercolor="black">
             <thead>
             <tr>
                 <th>목록</th>
@@ -34,25 +35,23 @@
             </thead>
             <tbody>
             <tr>
-                <td>게시글 넘버</td>
-                <td>제목</td>
-                <td>책이름</td>
-                <td>가격</td>
-                <td>판매자</td>
-                <td>정보</td>
-                <td>등록 시간</td>
+                <td align="center">게시글 넘버</td>
+                <td align="center">책이름</td>
+                <td align="center">가격</td>
+                <td align="center">판매자</td>
+                <td align="center">정보</td>
+                <td align="center">등록 시간</td>
             </tr>
             <form action="/product" method="post">
-                <tr th:each="product : ${products}">
-                    <td th:onclick="'location.href=\'product/'+ @{${product.id}} + '\''"
-                            th:text="${product.id}"
+                <tr align="center" th:each="product : ${products}">
+                    <td class="post_id" align="center" th:onclick="'location.href=\'product/'+ @{${product.id}} + '\''"
+                        th:text="${product.id}"
                     ></td>
-                    <td th:text="${product.title}"></td>
-                    <td th:text="${product.name}"></td>
-                    <td th:text="${product.price}"></td>
-                    <td th:text="${product.userid}"></td>
+                    <td align="center" th:text="${product.name}"></td>
+                    <td align="center" th:text="${product.price}"></td>
+                    <td align="center" th:text="${product.userid}"></td>
                     <td th:text="${product.info}"></td>
-                    <td th:text="${product.times}"></td>
+                    <td align="center" th:text="${product.times}"></td>
                 </tr>
             </form>
             </tbody>
