@@ -18,8 +18,11 @@ body{ background-color: #ededed; }
     float: right;
     margin-top: 10px;
     margin-right: 10px;
-    width: auto;
-    height: 50px;
+
+    width: auto; height: auto;
+    background-color: #fff;
+
+    padding: 10px; box-sizing: border-box;
 }
 
 .loginS button{
@@ -38,7 +41,7 @@ h1 {
     margin-top: 10px;
     margin-left: 10px;
     /* 한줄텍스트인 경우만 height와 line-height가 같으면 세로 가운데 처리 */
-    height: 100px; line-height: 100px; font-size: 20px;
+    height: 100px; line-height: 100px; font-size: 30px;
     font-weight: normal;
 }
 
@@ -79,3 +82,11 @@ h1 {
 .post_id:hover {
     color: #888888;
 }
+
+table, th, td {
+    border: 1px solid #bcbcbc;
+  }
+  table {
+    width: 200%
+    height: 200px;
+  }
