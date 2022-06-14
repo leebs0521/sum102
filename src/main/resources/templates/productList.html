@@ -36,7 +36,8 @@
             <tbody>
             <tr>
                 <td align="center">게시글 넘버</td>
-                <td align="center">책이름</td>
+                <td align="center">게시글 제목</td>
+                <td align="center">책 제목</td>
                 <td align="center">가격</td>
                 <td align="center">판매자</td>
                 <td align="center">정보</td>
@@ -47,6 +48,7 @@
                     <td class="post_id" align="center" th:onclick="'location.href=\'product/'+ @{${product.id}} + '\''"
                         th:text="${product.id}"
                     ></td>
+                    <td align="center" th:text="${product.title}"></td>
                     <td align="center" th:text="${product.name}"></td>
                     <td align="center" th:text="${product.price}"></td>
                     <td align="center" th:text="${product.userid}"></td>
